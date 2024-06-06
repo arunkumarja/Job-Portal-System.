@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.db.models import Count
 
 
 class Employer(models.Model):
@@ -27,9 +28,9 @@ class JobDetails(models.Model):
     def __str__(self):
         return f"job role {self.role} and {self.experience}"
 
-    def update_applications_count(self):
-        self.applications_count = self.JobApplication_set.count()
-        self.save()    
+    @property
+    def job_application_count(self):
+        return self.jobapplication_set.count()
 
 class Job_Seekers(models.Model):
     name = models.CharField(max_length=100)
@@ -54,3 +55,9 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return f"Application for {self.job_opening.role} by {self.job_seeker.name}"
+    def save(self, *args, **kwargs):
+        # Increase the applications count when a new job application is created
+        if not self.pk:  # Only for newly created instances
+            self.job_opening.applications_count += 1
+            self.job_opening.save()
+        super().save(*args, **kwargs)

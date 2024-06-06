@@ -23,4 +23,7 @@ urlpatterns = [
    path('job_seeker/',Job_seekerAPI.as_view(),name='job_seeker'),
    path('job_details/',JobDetailsAPI.as_view(),name='job_details'),
    path('job_apply/',JobApplicationAPI.as_view(),name='job_apply'),
+   path('test/',test,name='send'),
+   path('job/',Job_msg,name='job')
+
 ]
