@@ -104,4 +104,17 @@ def test(request):
 
 def Job_msg(request):
     Job_send_mail.delay()
+    a=[]
+    employee =Job_Seekers.objects.all()
+    for emp in employee:
+        x=emp.skills['skill']
+        print(x)
+        job_details = JobDetails.objects.all()
+    for detail in job_details:
+        y=detail.key_skills['Skills']
+        print(y)    
+    # for i in x:
+    #     if i in y:
+    #         a.append(i)
+    # print(a)
     return HttpResponse("send")

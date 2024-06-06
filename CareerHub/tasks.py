@@ -7,12 +7,21 @@ def test_func(self):
         print(i)
     return "Done"
 
-def Job_send_mail(self):
+@shared_task()
+def Job_send_mail():
+    a=[]
     employee =Job_Seekers.objects.all()
-    emp=employee.skills
-    print(emp)
-    job_details=JobDetails.objects.all()
-    job=job_details.skills
-    print(job)
+    for emp in employee:
+        x=emp.skills['skill']
+    job_details = JobDetails.objects.all()
+    for detail in job_details:
+        y=detail.key_skills['Skills']
+    for i in x:
+        if i in y:
+            a.append(i)
+    return a        
+
+
+    return "MSG DONE"
 
     
